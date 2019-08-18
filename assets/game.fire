@@ -1209,7 +1209,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 166,
       "height": 80
     },
     "_anchorPoint": {
@@ -1257,8 +1257,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "60",
-    "_N$string": "60",
+    "_string": "time",
+    "_N$string": "time",
     "_fontSize": 72,
     "_lineHeight": 40,
     "_enableWrapText": true,

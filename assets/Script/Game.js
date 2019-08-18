@@ -109,7 +109,7 @@ cc.Class({
         this.matchedConferenceList = [];
         this.publish = false;
         this.currtCardsScore = 0;
-        this.remainingSeconds = 10;
+        this.remainingSeconds = 60;
 
         this.cardsSize = [1, 1, 1, 1, 1, 1];
 
