@@ -39,6 +39,11 @@ cc.Class({
             type: cc.Label
         },
 
+        timerDisplay: {
+            default: null,
+            type: cc.Label
+        },
+
     },
 
     spawnNewBlock: function () {
@@ -53,13 +58,13 @@ cc.Class({
     spawnNewCard: function () {
         var newCard = cc.instantiate(this.cardPrefab);
 
-        if (this.score > 5){
+        if (this.score > 5) {
             newCard.getComponent('Card').fallSpeed = 4;
         } else if (this.score > 5 && this.score < 10) {
             newCard.getComponent('Card').fallSpeed = 8;
         } else if (this.score > 10) {
             newCard.getComponent('Card').fallSpeed = 12;
-        }else if (this.score > 20) {
+        } else if (this.score > 20) {
             newCard.getComponent('Card').fallSpeed = 20;
         }
 
@@ -116,6 +121,7 @@ cc.Class({
         this.matchedConferenceList = [];
         this.publish = false;
         this.currtCardsScore = 0;
+        this.remainingSeconds = 60;
 
         this.cardsSize = [1, 1, 1, 1, 1, 1];
 
@@ -133,6 +139,10 @@ cc.Class({
             this.spawnNewCard();// 这里的 this 指向 component
         }, interval, repeat, delay);
 
+        this.schedule(function () {
+            this.remainingSeconds -= 1;
+            cc.find('Canvas/timerDisplay').getComponent(cc.Label).string = this.remainingSeconds;
+        }, interval, 60, 3);
 
         // 调整检测线的位置
         this.destroyY = this.tray.y + this.blockHeight / 2;
@@ -171,6 +181,10 @@ cc.Class({
     },
 
     update(dt) {
+        if (this.remainingSeconds == 0) {
+            this.gameOver();
+        }
+
         var newStr = this.getLabelsStr();
         if (newStr === this.cards) {
             return;
@@ -181,6 +195,7 @@ cc.Class({
 
     gameOver: function () {
         // this.player.stopAllActions();
+        this.unscheduleAllCallbacks();
         cc.director.loadScene('game');
     },
 
