@@ -36,41 +36,16 @@ cc.Class({
          * 方案二: 多个差异大的颜色: 红(橙)黄蓝绿(湖蓝)
          * 
          */
-        // switch (this.code.string) {
-        //     case "标题": this.node.color = new cc.color(250, 250, 250, 255); console.info("change color to: ", this.code.string);break;
-        //     case "作者": this.node.color = new cc.color(220, 220, 240, 255); console.info("change color to: ", this.code.string);break;
-        //     case "摘要": this.node.color = new cc.color(200, 200, 230, 255); console.info("change color to: ", this.code.string);break;
-        //     case "正文": this.node.color = new cc.color(180, 180, 230, 255); console.info("change color to: ", this.code.string);break;
-        //     case "引用": this.node.color = new cc.color(160, 160, 220, 255); console.info("change color to: ", this.code.string);break;
-        //     case "附录": this.node.color = new cc.color(140, 140, 220, 255); console.info("change color to: ", this.code.string);break;
-        // }
-
-        // switch (this.code.string) {
-        //     case "标题": this.node.color = new cc.color(200, 220, 200, 255); console.info("change color to: ", this.code.string);break;
-        //     case "作者": this.node.color = new cc.color(190, 224, 197, 255); console.info("change color to: ", this.code.string);break;
-        //     case "摘要": this.node.color = new cc.color(141, 216, 156, 255); console.info("change color to: ", this.code.string);break;
-        //     case "正文": this.node.color = new cc.color(88, 197, 110, 255); console.info("change color to: ", this.code.string);break;
-        //     case "引用": this.node.color = new cc.color(47, 184, 74, 255); console.info("change color to: ", this.code.string);break;
-        //     case "附录": this.node.color = new cc.color(16, 158, 44, 255); console.info("change color to: ", this.code.string);break;
-        // }
 
         switch (this.code.string) {
-            case "标题": this.node.color = new cc.color(180, 240, 200, 255); break;
-            case "作者": this.node.color = new cc.color(135, 206, 250, 255); break;
-            case "摘要": this.node.color = new cc.color(120, 210, 150, 255); break;
-            case "正文": this.node.color = new cc.color(75, 175, 107, 255); break;
-            case "引用": this.node.color = new cc.color(25, 135, 65, 255); break;
-            case "附录": this.node.color = new cc.color(30, 144, 255, 255); break;
+            case "标题": this.node.color =  cc.color(180, 240, 200, 255); break;
+            case "作者": this.node.color =  cc.color(135, 206, 250, 255); break;
+            case "摘要": this.node.color =  cc.color(120, 210, 150, 255); break;
+            case "正文": this.node.color =  cc.color(75, 175, 107, 255); break;
+            case "引用": this.node.color =  cc.color(25, 135, 65, 255); break;
+            case "附录": this.node.color =  cc.color(30, 144, 255, 255); break;
         }
 
-        // switch (this.code.string) {
-        //     case "标题": this.node.color = new cc.color(10, 100, 165, 60); console.info("change color to: ", this.code.string);break;
-        //     case "作者": this.node.color = new cc.color(10, 100, 165, 60); console.info("change color to: ", this.code.string);break;
-        //     case "摘要": this.node.color = new cc.color(10, 100, 165, 120); console.info("change color to: ", this.code.string);break;
-        //     case "正文": this.node.color = new cc.color(10, 100, 165, 180); console.info("change color to: ", this.code.string);break;
-        //     case "引用": this.node.color = new cc.color(10, 100, 165, 240); console.info("change color to: ", this.code.string);break;
-        //     case "附录": this.node.color = new cc.color(10, 100, 165, 60); console.info("change color to: ", this.code.string);break;
-        // }
     },
 
     detectTrayLabel: function () {

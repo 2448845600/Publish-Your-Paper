@@ -2,10 +2,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        blockPrefab: {
-            default: null,
-            type: cc.Prefab
-        },
 
         cardPrefab: {
             default: null,
@@ -13,7 +9,6 @@ cc.Class({
         },
 
         maxTrackNum: 9,
-        maxExistBlockNum: 12,
         destroyY: 0,
         blockWidth: 120,
         blockHeight: 120,
@@ -44,15 +39,6 @@ cc.Class({
             type: cc.Label
         },
 
-    },
-
-    spawnNewBlock: function () {
-        cc.delayTime(3);
-        var newBlock = cc.instantiate(this.blockPrefab);
-        this.node.addChild(newBlock);
-
-        newBlock.setPosition(this.getNewBlockPosition());
-        newBlock.getComponent('Block').game = this;
     },
 
     spawnNewCard: function () {
@@ -114,39 +100,37 @@ cc.Class({
      * 2. 调整检测线(destroyY)的位置
      */
     onLoad() {
+
+        console.info("in OnLoad function()")
+
         this.timer = 0;
-        this.existBlockNum = 1;
         this.score = 0;
         this.cards = [];
         this.matchedConferenceList = [];
         this.publish = false;
         this.currtCardsScore = 0;
-        this.remainingSeconds = 60;
+        this.remainingSeconds = 3;
 
         this.cardsSize = [1, 1, 1, 1, 1, 1];
-
-        // cc.game.setFrameRate(30);
 
         // 资源加载后，按照定时器，定时生成大量block
         var interval = 1;// 以秒为单位的时间间隔
         var repeat = 1000;// 重复次数
         var delay = 2;// 开始延时
-        // this.schedule(function () {
-        //     this.spawnNewBlock();// 这里的 this 指向 component
-        // }, interval, repeat, delay);
 
         this.schedule(function () {
             this.spawnNewCard();// 这里的 this 指向 component
         }, interval, repeat, delay);
 
-        this.schedule(function () {
-            this.remainingSeconds -= 1;
-            cc.find('Canvas/timerDisplay').getComponent(cc.Label).string = this.remainingSeconds;
-        }, interval, 60, 3);
+        console.info("in OnLoad function, before change timerDisplay")
+
+        // this.schedule(function () {
+        //     this.remainingSeconds -= 1;
+        //     cc.find('Canvas/timerDisplay').getComponent(cc.Label).string = this.remainingSeconds;
+        // }, interval, 60, 3);
 
         // 调整检测线的位置
         this.destroyY = this.tray.y + this.blockHeight / 2;
-        console.info(this.destroyY)
 
         // 监听向上滑动
         this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
@@ -156,7 +140,7 @@ cc.Class({
 
     getLabelsStr: function () {
         var newStr = [];
-        for (let i = 0; i < 6; i++) {
+        for (var i = 0; i < 6; i++) {
             newStr.push(cc.find('Canvas/tray/label' + i).getComponent(cc.Label).string);
         }
         return newStr;
@@ -183,6 +167,7 @@ cc.Class({
     update(dt) {
         if (this.remainingSeconds == 0) {
             this.gameOver();
+            return;
         }
 
         var newStr = this.getLabelsStr();
@@ -193,9 +178,16 @@ cc.Class({
         this.cards = newStr;
     },
 
+    onDestroy() {
+        this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+    },
+
     gameOver: function () {
-        // this.player.stopAllActions();
         this.unscheduleAllCallbacks();
+
+        console.info("in gameOver function")
+
         cc.director.loadScene('game');
     },
 
