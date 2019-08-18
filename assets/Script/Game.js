@@ -109,7 +109,7 @@ cc.Class({
         this.matchedConferenceList = [];
         this.publish = false;
         this.currtCardsScore = 0;
-        this.remainingSeconds = 3;
+        this.remainingSeconds = 10;
 
         this.cardsSize = [1, 1, 1, 1, 1, 1];
 
@@ -124,10 +124,10 @@ cc.Class({
 
         console.info("in OnLoad function, before change timerDisplay")
 
-        // this.schedule(function () {
-        //     this.remainingSeconds -= 1;
-        //     cc.find('Canvas/timerDisplay').getComponent(cc.Label).string = this.remainingSeconds;
-        // }, interval, 60, 3);
+        this.schedule(function () {
+            this.remainingSeconds -= 1;
+            cc.find('Canvas/timerDisplay').getComponent(cc.Label).string = this.remainingSeconds;
+        }, interval, 60, 3);
 
         // 调整检测线的位置
         this.destroyY = this.tray.y + this.blockHeight / 2;
@@ -186,9 +186,11 @@ cc.Class({
     gameOver: function () {
         this.unscheduleAllCallbacks();
 
+        Global.finalScore = this.score;
+
         console.info("in gameOver function")
 
-        cc.director.loadScene('game');
+        cc.director.loadScene('gameover');
     },
 
 });
