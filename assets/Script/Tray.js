@@ -46,7 +46,7 @@ cc.Class({
     onLoad() {
         this.delta_x = 0;
         
-        this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        // this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
     },
 
     onDestroy() {
@@ -54,7 +54,7 @@ cc.Class({
     },
 
     update(dt) {
-        this.node.x += this.delta_x;
-        this.delta_x = 0;
+        // this.node.x += this.delta_x;
+        // this.delta_x = 0;
     },
 });

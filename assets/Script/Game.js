@@ -81,8 +81,8 @@ cc.Class({
     },
 
     onTouchMove: function (event) {
-        var nowLocationY = event.getLocation().y;
-        var delta_y = nowLocationY - this.startY;
+        // var nowLocationY = event.getLocation().y;
+        // var delta_y = nowLocationY - this.startY;
 
         // 效果明天设想的好
         // 希望实现满足投稿要求后，投稿由灰变绿，然后上滑变得越来越亮
@@ -90,7 +90,19 @@ cc.Class({
         //     cc.find('Canvas/publishDisplay').opacity = 55 + delta_y;;
         // }
 
-        if (this.publish && delta_y > 200) {
+        var nowLocation = event.getLocation();
+        var preLocation = event.getPreviousLocation();
+
+        // 得到在x轴方向上的位移x，player移动y
+        var deltaX = nowLocation.x - preLocation.x;
+        var deltaY = nowLocation.y - preLocation.y
+
+        // this.node.tray.x += deltaX;
+       
+        cc.find('Canvas/tray').x += deltaX;
+        deltaX = 0;
+
+        if (this.publish && deltaY > 200) {
             this.gainScore();
             this.resetLabels();
         }
