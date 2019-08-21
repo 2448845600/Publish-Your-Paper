@@ -223,7 +223,7 @@
     "_enabled": true,
     "blockWidth": 120,
     "blockHeight": 120,
-    "fallSpeed": 6,
+    "fallSpeed": 4,
     "letter": "A",
     "code": {
       "__id__": 3

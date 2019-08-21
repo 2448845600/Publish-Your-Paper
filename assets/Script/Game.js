@@ -44,14 +44,17 @@ cc.Class({
     spawnNewCard: function () {
         var newCard = cc.instantiate(this.cardPrefab);
 
+        if (this.score <=5 ) {
+            newCard.getComponent('Card').fallSpeed = 2;
+        }
         if (this.score > 5) {
             newCard.getComponent('Card').fallSpeed = 4;
-        } else if (this.score > 5 && this.score < 10) {
+        } else if (this.score > 5 && this.score < 12) {
+            newCard.getComponent('Card').fallSpeed = 6;
+        } else if (this.score > 12 && this.score >24) {
             newCard.getComponent('Card').fallSpeed = 8;
-        } else if (this.score > 10) {
+        } else if (this.score > 24) {
             newCard.getComponent('Card').fallSpeed = 12;
-        } else if (this.score > 20) {
-            newCard.getComponent('Card').fallSpeed = 20;
         }
 
         this.node.addChild(newCard);
@@ -109,18 +112,22 @@ cc.Class({
         this.matchedConferenceList = [];
         this.publish = false;
         this.currtCardsScore = 0;
-        this.remainingSeconds = 3;
+        this.remainingSeconds = 60;
 
         this.cardsSize = [1, 1, 1, 1, 1, 1];
 
         // 资源加载后，按照定时器，定时生成大量block
         var interval = 1;// 以秒为单位的时间间隔
-        var repeat = 1000;// 重复次数
+        var repeat = 20;// 重复次数
         var delay = 2;// 开始延时
 
         this.schedule(function () {
             this.spawnNewCard();// 这里的 this 指向 component
         }, interval, repeat, delay);
+
+        this.schedule(function () {
+            this.spawnNewCard();// 这里的 this 指向 component
+        }, 2, 1000, 22);
 
         console.info("in OnLoad function, before change timerDisplay")
 
