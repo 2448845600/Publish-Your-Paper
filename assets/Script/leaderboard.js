@@ -6,47 +6,50 @@ cc.Class({
 
     properties: {
         wxSubContextView: cc.Node,
+    
+        avatar: cc.Sprite,
+        nickName: cc.Label,
+
         background: cc.Node
     },
 
     start () {
-        // this.loadReadme();
-        // this.initAction();
+        this.initAction();
         this.initUserInfoButton();
         // this.initUserInfoLabel();
     },
 
-    initUserInfoLabel () {
-        if (typeof wx === 'undefined') {
-            return;
-        }
+    // initUserInfoLabel () {
+    //     if (typeof wx === 'undefined') {
+    //         return;
+    //     }
 
-        let systemInfo = wx.getSystemInfoSync();
+    //     let systemInfo = wx.getSystemInfoSync();
 
-        wx.getUserInfo({
-            openIdList: ['selfOpenId', 'ownAP0b9qt6AzvYOSWOX8VX8KMq0', 'ownAP0QJHIN2w3X60EUsj2Vah5Ig', 'ownAP0f8ANWUCcloXN1oZPfxtz0g'],
-            lang: 'zh_CN',
-            success: (res) => {
-              console.log('success', res.data)
-            },
-            fail: (res) => {
-              reject(res)
-            }
-          })
+    //     wx.getUserInfo({
+    //         openIdList: ['selfOpenId', 'ownAP0b9qt6AzvYOSWOX8VX8KMq0', 'ownAP0QJHIN2w3X60EUsj2Vah5Ig', 'ownAP0f8ANWUCcloXN1oZPfxtz0g'],
+    //         lang: 'zh_CN',
+    //         success: (res) => {
+    //           console.log('success', res.data)
+    //         },
+    //         fail: (res) => {
+    //           reject(res)
+    //         }
+    //       })
 
-          wx.getOpenDataContext().postMessage({
-            message: "User info get success."
-        });
-    },
+    //       wx.getOpenDataContext().postMessage({
+    //         message: "User info get success."
+    //     });
+    // },
 
     initAction () {
         this._isShow = false;
-        this.wxSubContextView.y = 1000;
-        this._showAction = cc.moveTo(0.5, this.wxSubContextView.x, 110);
-        this._hideAction = cc.moveTo(0.5, this.wxSubContextView.x, 1000);
+        this.wxSubContextView.y = -600;
+        this._showAction = cc.moveTo(0.5, this.wxSubContextView.x, -540);
+        this._hideAction = cc.moveTo(0.5, this.wxSubContextView.x, 1600);
 
-        // this.background.on('touchstart', this.onClick, this);
-        this.wxSubContextView.runAction(this._showAction)
+        this.background.on('touchstart', this.onClick, this);
+        // this.wxSubContextView.runAction(this._showAction)
     },
 
     initUserInfoButton () {
@@ -75,7 +78,13 @@ cc.Class({
         });
 
         button.onTap((res) => {
+
+            console.info("in onTap")
+
             let userInfo = res.userInfo;
+
+            console.info("userInfo.nickName", userInfo.nickName)
+
             if (!userInfo) {
                 this.tips.string = res.errMsg;
                 return;
@@ -114,17 +123,4 @@ cc.Class({
         }
     },
 
-
-    onShowReadme () {
-        this.readme.node.parent.active = true;
-    },
-
-    loadReadme () {
-        cc.loader.loadRes('readme', cc.TextAsset, (err, res) => {
-            this.readme.string = '\n' + res.text;
-        });
-        this.readme.node.on('touchstart' , () => {
-            this.readme.node.parent.active = false;
-        }, this);
-    },
 });

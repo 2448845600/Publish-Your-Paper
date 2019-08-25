@@ -16,7 +16,8 @@ cc.Class({
     },
 
     onTouchStart: function() {
-        cc.director.loadScene('game');
+        // cc.director.loadScene('game');
+        cc.director.loadScene('leaderboard');
     },
 
     onLoad() {

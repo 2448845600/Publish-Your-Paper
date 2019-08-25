@@ -17,7 +17,7 @@ cc.Class({
 
         cc.delayTime(3);
         // this.schedule(function () {
-        // cc.director.loadScene('leaderboard');
+        cc.director.loadScene('leaderboard');
         // }, interval, repeat, delay);
     },
 
