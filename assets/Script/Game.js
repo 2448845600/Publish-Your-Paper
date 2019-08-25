@@ -95,12 +95,11 @@ cc.Class({
 
         // 得到在x轴方向上的位移x，player移动y
         var deltaX = nowLocation.x - preLocation.x;
-        var deltaY = nowLocation.y - preLocation.y
+        var deltaY = nowLocation.y - this.startY
 
         // this.node.tray.x += deltaX;
        
         cc.find('Canvas/tray').x += deltaX;
-        deltaX = 0;
 
         if (this.publish && deltaY > 200) {
             this.gainScore();
@@ -124,13 +123,13 @@ cc.Class({
         this.matchedConferenceList = [];
         this.publish = false;
         this.currtCardsScore = 0;
-        this.remainingSeconds = 60;
+        this.remainingSeconds = 90;
 
         this.cardsSize = [1, 1, 1, 1, 1, 1];
 
         // 资源加载后，按照定时器，定时生成大量block
         var interval = 1;// 以秒为单位的时间间隔
-        var repeat = 20;// 重复次数
+        var repeat = 8;// 重复次数
         var delay = 2;// 开始延时
 
         this.schedule(function () {
@@ -139,14 +138,14 @@ cc.Class({
 
         this.schedule(function () {
             this.spawnNewCard();// 这里的 this 指向 component
-        }, 2, 1000, 22);
+        }, 2, 1000, 11);
 
         console.info("in OnLoad function, before change timerDisplay")
 
         this.schedule(function () {
             this.remainingSeconds -= 1;
             cc.find('Canvas/timerDisplay').getComponent(cc.Label).string = this.remainingSeconds;
-        }, interval, 60, 3);
+        }, interval, 120, 3);
 
         // 调整检测线的位置
         this.destroyY = this.tray.y + this.blockHeight / 2;
