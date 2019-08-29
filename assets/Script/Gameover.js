@@ -6,6 +6,15 @@ cc.Class({
             default: null,
             type: cc.Label
         },
+
+        restartButton: {
+            default: null,
+            type: cc.Button
+        },
+    },
+
+    onTouchStart: function(){
+        cc.director.loadScene('game');
     },
 
     start() {
@@ -15,10 +24,13 @@ cc.Class({
         var repeat = 1;// 重复次数
         var delay = 3;// 开始延时
 
-        cc.delayTime(3);
+        // cc.delayTime(3);
         // this.schedule(function () {
-        cc.director.loadScene('leaderboard');
+        // cc.director.loadScene('leaderboard');
         // }, interval, repeat, delay);
+
+        this.restartButton.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+        
     },
 
 });

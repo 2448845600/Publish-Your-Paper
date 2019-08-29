@@ -15,7 +15,9 @@
     "subContext": ""
   },
   "encryptJs": true,
-  "excludeScenes": [],
+  "excludeScenes": [
+    "10090ace-9564-4019-9ef4-004cce0dc601"
+  ],
   "fb-instant-games": {},
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
@@ -35,7 +37,7 @@
     "orientation": "portrait",
     "zip": false
   },
-  "startScene": "2ea70581-434e-4ace-8480-992eecb646d8",
+  "startScene": "b43f95d0-3f87-4c36-a900-7cf159151505",
   "title": "game",
   "webOrientation": "auto",
   "wechatgame": {
@@ -43,7 +45,7 @@
     "appid": "wx3c5959760887263c",
     "orientation": "portrait",
     "separate_engine": false,
-    "subContext": "PYP-WX-OpenData-Project"
+    "subContext": ""
   },
   "xxteaKey": "f7dabe31-90c5-47",
   "zipCompressJs": true
