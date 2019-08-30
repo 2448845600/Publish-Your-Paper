@@ -38,12 +38,12 @@ cc.Class({
          */
 
         switch (this.code.string) {
-            case "标题": this.node.color =  cc.color(180, 240, 200, 255); break;
-            case "作者": this.node.color =  cc.color(135, 206, 250, 255); break;
-            case "摘要": this.node.color =  cc.color(120, 210, 150, 255); break;
-            case "正文": this.node.color =  cc.color(75, 175, 107, 255); break;
-            case "引用": this.node.color =  cc.color(25, 135, 65, 255); break;
-            case "附录": this.node.color =  cc.color(30, 144, 255, 255); break;
+            case "标题": this.node.color = cc.color(180, 240, 200, 255); break;
+            case "作者": this.node.color = cc.color(135, 206, 250, 255); break;
+            case "摘要": this.node.color = cc.color(120, 210, 150, 255); break;
+            case "正文": this.node.color = cc.color(75, 175, 107, 255); break;
+            case "引用": this.node.color = cc.color(25, 135, 65, 255); break;
+            case "附录": this.node.color = cc.color(30, 144, 255, 255); break;
         }
 
     },
@@ -139,6 +139,9 @@ cc.Class({
     },
 
     LCS: function (str1, str2) {
+
+        console.info("str1", str1, "str2", str2);
+
         var arr = [];
 
         for (var i = 0; i < str1.length + 1; i++) {
@@ -163,6 +166,83 @@ cc.Class({
         return arr[str1.length][str2.length];
     },
 
+
+    caluFu: function (cards) {
+        /**
+         * 返回符数
+         */
+        var fu = 0;
+        var fuRegulation = {
+            "1345": 2,
+            "12345": 3,
+            "13456": 3,
+            "123456": 5
+        };
+
+        for (var index in fuRegulation) {
+            if (this.LCS(cards, index) === index.length) {
+                fu = fuRegulation[index] > fu ? fuRegulation[index] : fu;
+            }
+        }
+
+        return fu;
+    },
+
+
+    caluFanAndCombo: function (cards, cardsSize) {
+        /**
+         * 返回番数
+         */
+
+        var fan = 1;
+        var combo = [];
+
+        // "1345"相连，1番
+        for (var i = 0; i < cards.length - 3; i++) {
+            if (cards[i] == 1) {
+                if (cards[i + 1] == 3 && cards[i + 2] == 4 && cards[i + 3] == 5) {
+                    fan += 1;
+                    combo.push("结构紧凑")
+                }
+            }
+        }
+
+        // 大章节，1番累计
+        for (var i = 0; i < cardsSize.length; i++) {
+            if (cardsSize[i] == 3) {
+                fan += 1;
+            }
+        }
+
+        // 134445 标题 摘要 正文 正文 正文 引用
+        if (cards == "134445") {
+            if (cardsSize[2] == 3 && cardsSize[3] == 3 && cardsSize[4] == 3) {
+                fan += 3;
+                combo.push("三段论")
+            } else {
+                fan += 1;
+                combo.push("三段论")
+            }
+        }
+
+        var bigSize = [0, 0, 0, 0, 0, 0];
+        for (var i = 0; i < cards.length - 3; i++) {
+            if (cardsSize[i] == 3) {
+                bigSize[cards[i]] = 1;
+            }
+        }
+        if ((bigSize[1] + bigSize[3] + bigSize[4] + bigSize[5]) == 4) {
+            fan += 4;
+            combo.push("文采飞扬")
+        }
+
+        return {
+            "fan": fan,
+            "combo": combo
+        }
+
+    },
+
     /**
      * result = {
             "isHuCard": true,
@@ -180,19 +260,19 @@ cc.Class({
             cards.push(cc.find('Canvas/tray/label' + i).getComponent(cc.Label).string);
         }
 
-        var win = false;
-        var baseScore = 0;
-        var times = 1;
+        // var baseScore = 0;
+        // var times = 1;
         var winSeq = ["-", "标题", "作者", "摘要", "正文", "引用", "附录"]
-        var baseHuCardSeq = "1345";
-        var plusHuCardSeq = ["12345", "13456"];
-        var plusplusHuCardSeq = "123456";
-        var TripletNum = 0;
+        // var baseHuCardSeq = "1345";
+        // var plusHuCardSeq = ["12345", "13456"];
+        // var plusplusHuCardSeq = "123456";
+        // var TripletNum = 0;
 
         /**
          * 0. 胡牌(win)
          * 1. 基本分(baseScore)
          * 2. 倍数(times)
+         * 将字符串序列转换为数字序列，以防奇怪的错误
          */
         var cardsSeq = "";
         for (var i = 0; i < cards.length; i++) {
@@ -204,33 +284,44 @@ cc.Class({
             }
         }
 
-        console.info("baseHuCardSeq=", baseHuCardSeq, ", cardsSeq=", cardsSeq);
+        // console.info("baseHuCardSeq=", baseHuCardSeq, ", cardsSeq=", cardsSeq);
 
-        if (baseHuCardSeq.length != this.LCS(baseHuCardSeq, cardsSeq)) {
-            return { "isHuCard": false };
-        }
+        // if (baseHuCardSeq.length != this.LCS(baseHuCardSeq, cardsSeq)) {
+        //     return { "isHuCard": false };
+        // }
 
-        baseScore = 2;
-        var matchCardsNum = this.LCS(plusplusHuCardSeq, cardsSeq);
-        baseScore += (matchCardsNum > 5) ? 3 : 1;
+        // baseScore = 2;
+        // var matchCardsNum = this.LCS(plusplusHuCardSeq, cardsSeq);
+        // baseScore += (matchCardsNum > 5) ? 3 : 1;
 
-        for (var i = 0; i < cardsSize.length; i++) {
-            if (cardsSize[i] == 3) {
-                TripletNum += 1;
+        // for (var i = 0; i < cardsSize.length; i++) {
+        //     if (cardsSize[i] == 3) {
+        //         TripletNum += 1;
+        //     }
+        // }
+        // times += TripletNum;
+
+        var fu = this.caluFu(cardsSeq);
+        if (fu) {
+            var fanAndCombo = this.caluFanAndCombo(cardsSeq, cardsSize)
+            var fan = fanAndCombo["fan"];
+            var combo = fanAndCombo["combo"];
+            var score = fan * fu;
+
+            return {
+                "isPublish": true,
+                // "isPlus": matchCardsNum == 5,
+                // "isPlusPlus": matchCardsNum == 6,
+                // "TripletNum": TripletNum,
+                // "times": times,
+                "fan": fan,
+                "fu": fu,
+                "combo": combo,
+                "score": score
             }
-        }
-        times += TripletNum;
-
-        var result = {
-            "isHuCard": true,
-            "isPlus": matchCardsNum == 5,
-            "isPlusPlus": matchCardsNum == 6,
-            "TripletNum": TripletNum,
-            "times": times,
-            "score": times * baseScore
-        }
-
-        return result;
+        } else {
+            return { "isPublish": false };
+        };
 
     },
 
@@ -242,7 +333,7 @@ cc.Class({
             this.changeTrayLabel(labelId);
             var result = this.searchTrack();
 
-            if (result["isHuCard"]) {
+            if (result["isPublish"]) {
                 this.game.publish = true;
                 this.game.currtCardsScore = result["score"];
 
