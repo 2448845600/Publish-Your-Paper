@@ -13,7 +13,7 @@
 
 ## 演示视频
 
-<video src="demo.mp4"></video>
+<video src="https://raw.githubusercontent.com/2448845600/Publish-Your-Paper/master/demo.mp4"></video>
 
 ## Todo
 - [x] 修复iPhone8 Bug
