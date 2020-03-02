@@ -12,6 +12,7 @@
 - 一些彩蛋等你挖掘！！！
 
 ## 演示视频
+demo.mp4
 
 <video src="https://raw.githubusercontent.com/2448845600/Publish-Your-Paper/master/demo.mp4"></video>
 
