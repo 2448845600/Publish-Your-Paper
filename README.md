@@ -14,7 +14,7 @@
 ## 演示视频
 demo.mp4
 
-![short-demo](C:\Users\smile\Desktop\short-demo.gif)
+![short-demo](short-demo.gif)
 
 <video src="https://raw.githubusercontent.com/2448845600/Publish-Your-Paper/master/demo.mp4"></video>
 
